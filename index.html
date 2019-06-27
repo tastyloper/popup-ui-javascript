@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Popup</title>
+  <style>
+    @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400);
+
+    body {
+      font-family: 'Open Sans';
+      font-weight: 300;
+      background-color: #D6E1E5;
+    }
+    h1 {
+      color: #DB5B33;
+      font-weight: 300;
+      text-align: center;
+    }
+    .is-show {
+      display: block !important;
+    }
+    .popup {
+      display: none;
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      -webkit-transform: translateX(-50%);
+      -moz-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+      -o-transform: translateX(-50%);
+      transform: translateX(-50%);
+      z-index: 2;
+      width: 700px;
+      padding: 15px;
+      background-color: #FFF;
+      -webkit-box-shadow: 0 15px 30px 0 rgba(0, 0, 0, .5);
+      -moz-box-shadow: 0 15px 30px 0 rgba(0, 0, 0, .5);
+      box-shadow: 0 15px 30px 0 rgba(0, 0, 0, .5);
+    }
+    .btn-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+    }
+    .overlay {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1;
+      background-color: rgba(0, 0, 0, .3);
+    }
+    .toggle-popup, .btn-ok, .btn-cancel {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>JavaScript Popup</h1>
+
+  <div class="popup">
+    <h1>JavaScript Popup</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+    <button class="btn-close">X</button>
+    <input type="text">
+    <button class="btn-ok">OK</button>
+    <button class="btn-cancel">Cancel</button>
+  </div>
+  <div class="overlay"></div>
+
+  <button class="toggle-popup">show popup</button>
+
+  <p class="popup-message"></p>
+  <script>
+    (function start() {
+      class Popup {
+        constructor() {
+          this.$togglePopup = document.querySelector('.toggle-popup');
+          this.$popup = document.querySelector('.popup');
+          this.$input = this.$popup.querySelector('input');
+          this.$btnOk = document.querySelector('.btn-ok');
+          this.$btnClose = document.querySelector('.btn-close');
+          this.$btnCancel = document.querySelector('.btn-cancel');
+          this.$overlay = document.querySelector('.overlay');
+          this.$popupMessage = document.querySelector('.popup-message');
+          this.$togglePopup.addEventListener('click', this.togglePopup.bind(this));
+          this.$btnOk.addEventListener('click', this.dataPush.bind(this));
+          this.$btnClose.addEventListener('click', this.togglePopup.bind(this));
+          this.$btnCancel.addEventListener('click', this.popupCancel.bind(this));
+          this.$overlay.addEventListener('click', this.togglePopup.bind(this));
+        }
+
+        togglePopup() {
+          this.$popup.classList.toggle('is-show');
+          this.$overlay.classList.toggle('is-show');
+        }
+
+        popupCancel() {
+          this.$input.value = '';
+          this.togglePopup();
+        }
+
+        dataPush() {
+          this.$popupMessage.textContent = `form popup : ${this.$input.value}`;
+          this.popupCancel();
+        }
+      }
+      const popup = new Popup();
+    }());
+  </script>
+</body>
+</html>
